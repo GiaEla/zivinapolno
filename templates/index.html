@@ -64,8 +64,12 @@
                 <!-- Set the first background image using inline CSS below. -->
                 <div class="fill" style="background-image:url('{% static 'img/bird.jpg' %}');"></div>
                 <div class="carousel-caption">
-                    <button class="btn btn-success col-md-3 col-md-offset-3"> Naroči karto </button>
-                    <button class="btn btn-success col-md-3 "> Več o tem </button>
+                    <div class="col-md-3 col-md-offset-3">
+                        <button class="btn btn-success btn-lg col-md-12"> Naroči karto </button>
+                    </div>
+                    <div class="col-md-3">
+                        <button class="btn btn-success btn-lg col-md-12"> Več o tem </button>
+                    </div>
                 </div>
             </div>
             <div class="item">
@@ -103,10 +107,19 @@
             <div class="col-md-12">
                 <div class="col-md-4 gly-div-header">
                     <span class="glyphicon glyphicon-heart gly-header" aria-hidden="true"></span>
-                    <br> <h1>Napolni srce</h1>
+                    <h1 style="color: #ffaa00">Napolni srce</h1>
+                    <p>
+                        Ljubi svojega bližnjega kot samega sebe.
+                    </p>
                 </div>
-                <div class="col-md-4 gly-div-header"> <span class="glyphicon glyphicon-fire gly-header" aria-hidden="true"></span> <br> <h1>Napolni duha</h1> </div>
-                <div class="col-md-4 gly-div-header"> <span class="glyphicon glyphicon-road gly-header" aria-hidden="true"></span> <br> <h1>Napolni vsakdan</h1> </div>
+                <div class="col-md-4 gly-div-header">
+                    <span class="glyphicon glyphicon-fire gly-header" aria-hidden="true"></span>
+                    <h1 style="color: #ffaa00">Napolni duha</h1>
+                </div>
+                <div class="col-md-4 gly-div-header">
+                    <span class="glyphicon glyphicon-road gly-header" aria-hidden="true"></span>
+                    <h1 style="color: #ffaa00">Napolni vsakdan</h1>
+                </div>
             </div>
         </div>
 
