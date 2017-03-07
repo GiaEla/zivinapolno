@@ -47,6 +47,7 @@ class Product(models.Model):
 class Offer(models.Model):
     date = models.DateTimeField(null=False)
     place = models.CharField(max_length=100)
+    products = models.ManyToManyField(Product, through='ProductQuantity')
     total_no_vat = models.DecimalField(max_digits=8, decimal_places=2, null=False)
     total_with_vat = models.DecimalField(max_digits=8, decimal_places=2)
     offer_number = models.PositiveIntegerField(editable=False, unique=True, null=False)
@@ -72,7 +73,7 @@ class Offer(models.Model):
 class Invoice(models.Model):
     date = models.DateTimeField(null=False)
     place = models.CharField(max_length=100)
-    products = models.ManyToManyField(Product, through='ProductQuantity', null=False)
+    products = models.ManyToManyField(Product, through='ProductQuantity')
     total_no_vat = models.DecimalField(max_digits=8, decimal_places=2, null=False)
     total_with_vat = models.DecimalField(max_digits=8, decimal_places=2)
     invoice_number = models.PositiveIntegerField(editable=False, null=False)
@@ -120,6 +121,7 @@ class BankAccount(models.Model):
 
 class ProductQuantity(models.Model):
     product = models.ForeignKey(Product)
+    offer = models.ForeignKey(Offer)
     invoice = models.ForeignKey(Invoice)
     quantity = models.PositiveSmallIntegerField
 
@@ -127,7 +129,7 @@ class ProductQuantity(models.Model):
 class Activity(models.Model):
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=500)
-    #image = models.ImageField('Activity_image')
+    # image = models.ImageField('Activity_image')
 
 
 class Event(models.Model):
@@ -137,7 +139,8 @@ class Event(models.Model):
     date_to = models.DateField
     product = models.ForeignKey(Product)
 
-class Event_detail(models.Model):
+
+class EventDetail(models.Model):
     name = models.CharField(max_length=50)
     event = models.ForeignKey(Event)
     date_from = models.DateField
@@ -147,12 +150,10 @@ class Event_detail(models.Model):
 
 
 class Discount(models.Model):
-    event_key = models.ForeignKey(Activity, null=True)
+    event_key = models.ForeignKey(Event, null=True)
     product_key = models.ForeignKey(Product, null=True)
     name = models.CharField(max_length=50)
     date_from = models.DateField(null=True)
     date_to = models.DateField(null=True)
     from_quantity = models.PositiveSmallIntegerField(null=True)
     value = models.DecimalField(max_digits=8, decimal_places=2, null=False)
-
-
