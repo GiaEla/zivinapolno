@@ -1,7 +1,14 @@
+from django.template.loader import get_template
+from django.template import Context
+from django.conf import settings
+
 from decimal import *
+from time import gmtime, strftime
+import pdfkit
+import os
 
 
-def generate_object_number(date, last_object, type):
+def generate_object_number(date, last_object, type_of_object):
     """
     generates number for invoices and offers in form - last two numbers of a year + serial number
     :param date: date of invoice or offer
@@ -11,12 +18,13 @@ def generate_object_number(date, last_object, type):
     """
 
     if not last_object:
-        generated_number = date.year + '0000'
+        yr = str(date.year)
+        generated_number = int(yr[2:] + '0001')
 
-    elif type == "offer":
+    elif type_of_object == "offer":
         generated_number = last_object.offer_number + 1
 
-    elif type == "invoice":
+    elif type_of_object == "invoice":
         generated_number = last_object.invoice_number + 1
 
     else:
@@ -37,4 +45,21 @@ def generate_price_with_vat(price_no_vat, vat):
     price = Decimal(str(price_float)).quantize(Decimal('.01'), rounding=ROUND_DOWN)
 
     return price
+
+
+def generate_pdf(template, context, dir_name, file_name):
+    html_string = get_template(template).render(Context(context))
+
+    config = pdfkit.configuration(wkhtmltopdf=settings.WKTHMLTOPDF_PATH)
+
+    relative_path = "static/pdfs/" + dir_name + '/' + file_name
+
+    file_path = os.path.join(settings.BASE_DIR, relative_path)
+
+    pdfkit.from_string(html_string, file_path, configuration=config)
+
+    return relative_path
+
+
+
 
