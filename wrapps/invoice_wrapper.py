@@ -1,6 +1,6 @@
 from django.db import models
 
-from pro.models import ProductQuantityInvoice, ProductQuantityOffer, Product, Vat
+from pro.models import ProductQuantityInvoice, ProductQuantityOffer, Product, Vat, Invoice, Reference
 from utils.generators import generate_pdf
 
 
@@ -25,6 +25,10 @@ class InvoiceWrapper:
         html_context = {
             'products': product_with_prices,
             'invoice_number': invoice_obj.invoice_number,
+            'place': invoice_obj.place,
+            'date': invoice_obj.date.date(),
+            'total_no_vat': invoice_obj.total_no_vat,
+            'total_with_vat': invoice_obj.total_with_vat,
         }
 
         pdf_path = generate_pdf('invoice.html', html_context, 'invoices', str(invoice_obj.invoice_number) + '.pdf')
@@ -36,7 +40,7 @@ class OfferWrapper:
 
     @staticmethod
     def generate_offer(offer_obj):
-        products_quantity = ProductQuantityOffer.objects.filter(invoice=offer_obj.id)
+        products_quantity = ProductQuantityOffer.objects.filter(offer=offer_obj.id)
         product_with_prices = []
 
         for quantity in products_quantity:
@@ -53,7 +57,13 @@ class OfferWrapper:
 
         html_context = {
             'products': product_with_prices,
-            'invoice_number': offer_obj.invoice_number,
+            'offer_number': offer_obj.offer_number,
+            'total_no_vat': offer_obj.total_no_vat,
+            'total_with_vat': offer_obj.total_with_vat,
+            'place': offer_obj.place,
+            'date': offer_obj.date,
+            'bank_account': offer_obj.bank_account.account,
+            'reference': offer_obj.reference.reference,
         }
 
         pdf_path = generate_pdf('offer.html', html_context, 'offers', str(offer_obj.offer_number) + '.pdf')

@@ -1,6 +1,7 @@
 from decimal import Decimal
 from django.contrib.auth.models import User
 from django.db import models
+from django.forms import ModelForm
 from django.utils.translation import ugettext_lazy as _
 
 from utils.generators import generate_object_number, generate_price_with_vat
@@ -53,6 +54,36 @@ class Product(models.Model):
         super(Product, self).save(*args, **kwargs)
 
 
+class Reference(models.Model):
+    name = models.CharField('Ime', max_length=50)
+    reference = models.PositiveSmallIntegerField('Referenca')
+
+    def __unicode__(self):
+        return '%s' % self.name
+
+    def __str__(self):
+        return '%s' % self.name
+
+    class Meta:
+        verbose_name = _(u'bančna referenca')
+        verbose_name_plural = _(u'bančne reference')
+
+
+class BankAccount(models.Model):
+    name = models.CharField(max_length=50)
+    account = models.CharField(max_length=30, null=False)
+
+    def __unicode__(self):
+        return '%s' % self.name
+
+    def __str__(self):
+        return '%s' % self.name
+
+    class Meta:
+        verbose_name = _(u'bančni račun')
+        verbose_name_plural = _(u'bančni računi')
+
+
 class Offer(models.Model):
     date = models.DateTimeField('Datum')
     place = models.CharField('Kraj', max_length=100)
@@ -101,6 +132,7 @@ class Invoice(models.Model):
     def __str__(self):
         return '%s' % self.invoice_number
 
+
     class Meta:
         verbose_name = _(u'račun')
         verbose_name_plural = _(u'računi')
@@ -114,34 +146,22 @@ class Invoice(models.Model):
         super(Invoice, self).save(*args, **kwargs)
 
 
-class Reference(models.Model):
-    name = models.CharField('Ime', max_length=50)
-    reference = models.PositiveSmallIntegerField('Referenca')
-
-    def __unicode__(self):
-        return '%s' % self.name
-
-    def __str__(self):
-        return '%s' % self.name
+class InvoiceForm(ModelForm):
 
     class Meta:
-        verbose_name = _(u'bančna referenca')
-        verbose_name_plural = _(u'bančne reference')
+        model = Invoice
+        fields = ['date',
+                  'place',
+                  'products',
+                  'recipient',
+                  'reference',
+                  'bank_account',
+                  'offer']
 
+    def __init__(self, *args, **kwargs):
+        super(InvoiceForm, self).__init__(*args, **kwargs)
 
-class BankAccount(models.Model):
-    name = models.CharField(max_length=50)
-    account = models.CharField(max_length=30, null=False)
-
-    def __unicode__(self):
-        return '%s' % self.name
-
-    def __str__(self):
-        return '%s' % self.name
-
-    class Meta:
-        verbose_name = _(u'bančni račun')
-        verbose_name_plural = _(u'bančni računi')
+        self.fields['products'].required = True
 
 
 class ProductQuantityInvoice(models.Model):
@@ -204,8 +224,8 @@ class ProductQuantityOffer(models.Model):
         product_quantities_offer = ProductQuantityOffer.objects.filter(offer=self.offer).exclude(id=self.id)
 
         for product_quantity_off in product_quantities_offer:
-            price_with_vat_offer += Decimal(str(product_quantity_off.qt_value)) * product_quantity_off.offer.price_with_vat
-            price_no_vat_offer += Decimal(str(product_quantity_off.qt_value)) * product_quantity_off.offer.price_no_vat
+            price_with_vat_offer += Decimal(str(product_quantity_off.qt_value)) * product_quantity_off.product.price_with_vat
+            price_no_vat_offer += Decimal(str(product_quantity_off.qt_value)) * product_quantity_off.product.price_no_vat
 
         # adds current product
         price_with_vat_offer += Decimal(str(self.qt_value)) * self.product.price_with_vat

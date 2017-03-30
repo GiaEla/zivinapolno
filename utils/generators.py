@@ -1,4 +1,5 @@
-from django.template.loader import get_template
+from django.template import Template
+from django.template.loader import get_template, render_to_string
 from django.template import Context
 from django.conf import settings
 
@@ -48,7 +49,16 @@ def generate_price_with_vat(price_no_vat, vat):
 
 
 def generate_pdf(template, context, dir_name, file_name):
-    html_string = get_template(template).render(Context(context))
+    """
+
+    :param template:
+    :param context:
+    :param dir_name:
+    :param file_name:
+    :return:
+    """
+
+    html_string = render_to_string(template, context)
 
     config = pdfkit.configuration(wkhtmltopdf=settings.WKTHMLTOPDF_PATH)
 
