@@ -2,6 +2,7 @@ from django.db import models
 
 from pro.models import ProductQuantityInvoice, ProductQuantityOffer, Product, Vat, Invoice, Reference
 from utils.generators import generate_pdf
+from django.core.mail import send_mail
 
 
 class InvoiceWrapper:

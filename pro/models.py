@@ -37,6 +37,7 @@ class Product(models.Model):
     price_no_vat = models.DecimalField('Cena brez DDV', max_digits=8, decimal_places=2)
     price_with_vat = models.DecimalField('Cena z DDV', max_digits=8, decimal_places=2)
     vat = models.ForeignKey(Vat, verbose_name='DDV')
+    event_based = models.BooleanField('Produkt je vezan na dogodek', default=True)
 
     def __unicode__(self):
         return '%s : %s€' % (self.name, self.price_with_vat)
@@ -94,6 +95,7 @@ class Offer(models.Model):
     recipient = models.ForeignKey(User, verbose_name='Prejemnik')
     reference = models.ForeignKey('Reference', verbose_name='Referenca')
     bank_account = models.ForeignKey('BankAccount', verbose_name='Bančni račun')
+    payed = models.BooleanField('Plačano', default=False)
 
     def __unicode__(self):
         return '%s %s' % self.offer_number, self.date
@@ -254,7 +256,7 @@ class Event(models.Model):
     description = models.CharField('Opis', max_length=500)
     date_from = models.DateField('Pričetek', null=True)
     date_to = models.DateField('Zaključek', null=True)
-    product = models.ForeignKey(Product, default=1, verbose_name='Izdelki')
+    independently_sold = models.BooleanField('Možen je nakup posamičnih vstopnic', default=False)
 
     class Meta:
         verbose_name = _(u'generalni dogodek')
@@ -264,19 +266,19 @@ class Event(models.Model):
 class EventDetail(models.Model):
     name = models.CharField('Dogodek', max_length=50)
     event = models.ForeignKey(Event, default=1, verbose_name='Generalni dogodek')
-    date_from = models.DateField('Pričetek')
-    date_to = models.DateField('Zaključek')
-    all_tickets = models.PositiveSmallIntegerField('Število vstopnic', null=True)
-    sold_tickets = models.PositiveSmallIntegerField('Prodane vstopnice', null=True)
+    date_from = models.DateField('Datum pričetka', null=True)
+    from_hour = models.TimeField('Ura pričetka', null=True)
+    date_to = models.DateField('Zaključek', null=True)
+    all_tickets = models.PositiveSmallIntegerField('Število vseh vstopnic', null=True)
+
 
     class Meta:
-        verbose_name = _(u'dogodek')
-        verbose_name_plural = _(u'dogodki')
+        verbose_name = _(u'Dogodek')
+        verbose_name_plural = _(u'Dogodki')
 
 
 class Discount(models.Model):
-    event_key = models.ForeignKey(Event, null=True, verbose_name='Dogodek')
-    product_key = models.ForeignKey(Product, null=True, verbose_name='Izdelek')
+
     name = models.CharField('Popust', max_length=50)
     date_from = models.DateField('Pričetek', null=True)
     date_to = models.DateField('Zaključek', null=True)
@@ -284,5 +286,32 @@ class Discount(models.Model):
     value = models.DecimalField('Vrednost popusta', max_digits=8, decimal_places=2, null=False)
 
     class Meta:
-        verbose_name = _(u'popust')
-        verbose_name_plural = _(u'popusti')
+        verbose_name = _(u'Popust')
+        verbose_name_plural = _(u'Popusti')
+
+
+class ProductEvent(models.Model):
+    event_detail = models.ForeignKey(EventDetail, verbose_name='Dogodek')
+    product = models.ForeignKey(Product, verbose_name='Izdelek')
+    sold_tickets = models.SmallIntegerField('Število prodanih kart')
+
+    class Meta:
+        verbose_name = _(u'Izdelek, vezan na dogodek')
+        verbose_name_plural = _(u'Izdelki, vezani na dogodek')
+
+
+class ProductDiscount(models.Model):
+    product = models.ForeignKey(Product, verbose_name='Izdelek')
+    discount = models.ForeignKey(Discount, verbose_name='Popust')
+
+    verbose_name = _(u'Popust za izdelke')
+    verbose_name_plural = _(u'Popusti za izdelke')
+
+
+class ProductEventDiscount(models.Model):
+    product_event = models.ForeignKey(ProductEvent, verbose_name='Izdelek, vezan na dogodek')
+    discount = models.ForeignKey(Discount, verbose_name='Popust')
+
+    class Meta:
+        verbose_name = _(u'Popust za izdelke, vezane na dogodek')
+        verbose_name_plural = _(u'Popusti za izdelke, vezane na dogodek')
