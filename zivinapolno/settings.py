@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'pro',
-    'reg'
+    'reg',
+    'nested_inline'
 ]
 
 MIDDLEWARE = [
@@ -117,6 +118,19 @@ USE_L10N = True
 
 USE_TZ = True
 
+EMAIL_USE_TLS = True
+
+EMAIL_HOST = 'smtp.gmail.com'
+
+EMAIL_PORT = 587
+
+EMAIL_HOST_USER = 'giacotesting@gmail.com'
+
+EMAIL_HOST_PASSWORD = 'nimaveze123'
+
+DEFAULT_FROM_EMAIL = 'giacotesting@gmail.com'
+
+DEFAULT_TO_EMAIL = 'spela.giacomelli@gmail.com'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
