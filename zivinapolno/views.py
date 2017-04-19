@@ -1,11 +1,11 @@
 from django.shortcuts import render
-from wrapps.invoice_wrapper import InvoiceWrapper, OfferWrapper
 from pro.models import Invoice, Offer
 
 
 def index(request):
+    #pass
     last_object = Offer.objects.all().order_by('date').last()
-    OfferWrapper.generate_offer(last_object)
+    last_object.generate_pdf()
     return render(request, 'index.html')
 
 

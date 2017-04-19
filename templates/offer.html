@@ -54,6 +54,7 @@
             <th> Cena brez DDV </th>
             <th> DDV </th>
             <th> Cena z DDV </th>
+            <th> Popust </th>
         </tr>
             {% for product in products %}
             <tr>
@@ -62,6 +63,7 @@
                 <td> {{ product.price_no_vat }} </td>
                 <td> {{ product.vat }} </td>
                 <td> {{ product.price_with_vat }} </td>
+                <td> {{ product.discount }}</td>
                 <br>
             </tr>
             {% endfor %}
@@ -69,16 +71,15 @@
 
 
     <div class = 'right'>
-        Znesek brez DDV: {{ total_no_vat }} <br>
-        Znesek z DDV: {{ total_with_vat }} <br>
-{#      Popust: {{ hjttj }} <br> #}
-        <strong>Za plačilo EUR: 50 </strong> <br>
+        Znesek brez DDV: {{ total_no_vat }} €<br>
+        Znesek z DDV: {{ total_with_vat }} €<br>
+        <strong> Cena s popustom: {{ total_with_discount }} €</strong> <br>
     </div>
 
     <div class="pay_det">
         <h3> Podatki o plačilu: </h3>
-        <b>Rok plačila:</b> potrebno je dodat v model rok plačila + napisat funkcijo <br>
-        <b>Koda namena:</b> kaj je koda namena? <br>
+        <b>Rok plačila:</b> {{ pay_until }} <br>
+        <b>Koda namena:</b> OTHR <br>
         <b>Namen plačila:</b> Plačilo predračuna št. {{ offer_number }} <br>
         <b>BIC banke prejemnika:</b> LJBASI2X <br>
         <b>IBAN:</b> {{ bank_account }} <br>
