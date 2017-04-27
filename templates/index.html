@@ -10,6 +10,12 @@
 
     <link href="{% static 'css/costum.css'%}" rel="stylesheet">
 
+    <link href="https://fonts.googleapis.com/css?family=Amatic+SC&subset=latin,latin-ext" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css?family=Caveat+Brush|Rock+Salt" rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
     <title>Živi na polno</title>
@@ -55,41 +61,31 @@
     <header id="myCarousel" class="carousel slide">
         <!-- Indicators -->
         <ol class="carousel-indicators">
-            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-            <li data-target="#myCarousel" data-slide-to="1"></li>
-            <li data-target="#myCarousel" data-slide-to="2"></li>
+            {% for next_event in next_events %}
+            <li data-target="#myCarousel" data-slide-to={{ forloop.counter }}  {% if forloop.counter == 1 %} class="active">{% endif %}</li>
+{#            <li data-target="#myCarousel" data-slide-to="1"></li>#}
+{#            <li data-target="#myCarousel" data-slide-to="2"></li>#}
+            {% endfor %}
         </ol>
 
         <!-- Wrapper for Slides -->
         <div class="carousel-inner">
-            <div class="item active">
+            {% for next_event in next_events %}
+                <div class="item {% if forloop.counter == 1  %}active{% endif %}">
                 <!-- Set the first background image using inline CSS below. -->
-                <div class="fill" style="background-image:url('{% static 'img/bird.jpg' %}');"></div>
+                <div class="fill" style="background-image:url('{{ next_event.img_event.img.url}}');"></div>
                 <div class="carousel-caption">
+                    <div class="col-md-12 event_name event"> {{ next_event.name }} </div>
+                    <div class="col-md-12 event_description event"> {{ next_event.short_description }} </div>
                     <div class="col-md-3 col-md-offset-3">
-                        <button class="btn btn-success btn-lg col-md-12"> Naroči karto </button>
+                        <button class="btn btn-success btn-lg btn-cost col-md-12 {% if next_event.btn_type == 'Prihaja kmalu' %} disabled {% endif %}"> {{ next_event.btn_type }} </button>
                     </div>
                     <div class="col-md-3">
-                        <button class="btn btn-success btn-lg col-md-12"> Več o tem </button>
+                        <button class="btn btn-success btn-lg btn-cost col-md-12"> Več o tem </button>
                     </div>
                 </div>
             </div>
-            <div class="item">
-                <!-- Set the second background image using inline CSS below. -->
-                <div class="fill" style="background-image:url('{% static 'img/jet.jpg' %}');"></div>
-                <div class="carousel-caption">
-                    <button class="btn btn-success col-md-3 col-md-offset-3"> Naroči karto </button>
-                    <button class="btn btn-success col-md-3 "> Več o tem </button>
-                </div>
-            </div>
-            <div class="item">
-                <!-- Set the third background image using inline CSS below. -->
-                <div class="fill" style="background-image:url('{% static 'img/wolf.jpg' %}');"></div>
-                <div class="carousel-caption">
-                    <button class="btn btn-success col-md-3 col-md-offset-3"> Naroči karto </button>
-                    <button class="btn btn-success col-md-3 "> Več o tem </button>
-                </div>
-            </div>
+            {% endfor %}
         </div>
 
         <!-- Controls -->
@@ -109,18 +105,18 @@
             <div class="col-md-12">
                 <div class="col-md-4 gly-div-header">
                     <span class="glyphicon glyphicon-heart gly-header" aria-hidden="true"></span>
-                    <h1 style="color: #ffaa00">Napolni srce</h1>
+                    <h1 class="napolni">Napolni srce</h1>
                     <p>
                         Ljubi svojega bližnjega kot samega sebe.
                     </p>
                 </div>
                 <div class="col-md-4 gly-div-header">
                     <span class="glyphicon glyphicon-fire gly-header" aria-hidden="true"></span>
-                    <h1 style="color: #ffaa00">Napolni duha</h1>
+                    <h1 class="napolni">Napolni duha</h1>
                 </div>
                 <div class="col-md-4 gly-div-header">
                     <span class="glyphicon glyphicon-road gly-header" aria-hidden="true"></span>
-                    <h1 style="color: #ffaa00">Napolni vsakdan</h1>
+                    <h1 class="napolni">Napolni vsakdan</h1>
                 </div>
             </div>
         </div>
@@ -140,12 +136,6 @@
     </div>
     <!-- /.container -->
 
-    <!-- Script to Activate the Carousel -->
-    <script>
-    $('.carousel').carousel({
-        interval: 5000 //changes the speed
-    })
-    </script>
 
 </body>
 
@@ -158,7 +148,7 @@
     <!-- Script to Activate the Carousel -->
     <script>
     $('.carousel').carousel({
-        interval: 2000 //changes the speed
+        interval: 5000 //changes the speed
     })
     </script>
 

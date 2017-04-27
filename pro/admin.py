@@ -128,6 +128,16 @@ class ProductForm(forms.ModelForm):
     vat = forms.ChoiceField(choices=VAT_CHOICES)
 
 
+class EventForm(forms.ModelForm):
+    BTN_TYPE_CHOICES = (
+        ('Kupi karto', 'Kupi karto'),
+        ('Prijavi se', 'Prijavi se'),
+        ('Prihaja kmalu', 'Prihaja kmalu'),
+    )
+
+    btn_type = forms.ChoiceField(choices=BTN_TYPE_CHOICES)
+
+
 class DiscountInline(NestedStackedInline):
     model = Discount
     extra = 0
@@ -154,6 +164,12 @@ class ProductAdmin(admin.ModelAdmin):
     readonly_fields = ('price_with_vat',)
     list_display = ('name',)
     form = ProductForm
+
+
+class ImageAdmin(admin.ModelAdmin):
+    fields = ('image_tag', 'img', 'name')
+    readonly_fields = ('image_tag',)
+    list_display = ('name','image_tag')
 
 
 class DiscountAdmin(admin.ModelAdmin):
@@ -201,6 +217,7 @@ class EventDetailInline(NestedStackedInline):
 
 class EventAdmin(NestedModelAdmin):
     model = Event
+    form = EventForm
     inlines = [EventDetailInline]
 
 admin.site.register(Product, ProductAdmin)
@@ -213,3 +230,4 @@ admin.site.register(Activity)
 admin.site.register(Event, EventAdmin)
 admin.site.register(EventDetail, EventDetailAdmin)
 admin.site.register(Discount, DiscountAdmin)
+admin.site.register(Image, ImageAdmin)

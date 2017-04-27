@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+BASE_URL = 'http://127.0.0.1:8000/'
+
 
 # Application definition
 
@@ -80,8 +82,12 @@ WSGI_APPLICATION = 'zivinapolno.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'napolno',
+        'USER': 'napolno',
+        'PASSWORD': 'napolno',
+        'HOST': '192.168.1.69',
+        'PORT': '5432',
     }
 }
 
@@ -137,5 +143,9 @@ DEFAULT_TO_EMAIL = 'spela.giacomelli@gmail.com'
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+MEDIA_URL = "/"
 
 WKTHMLTOPDF_PATH = b'C:\Program Files\wkhtmltopdf\\bin\wkhtmltopdf.exe'

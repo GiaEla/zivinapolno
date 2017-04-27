@@ -1,8 +1,12 @@
 from datetime import timedelta, datetime
-from decimal import Decimal
+from decimal import Decimal, ROUND_HALF_EVEN, Context
+
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
 from django.forms import ModelForm
+from django.utils.html import format_html
+from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from django.http import HttpResponseRedirect, request
 from django.contrib import admin
@@ -23,10 +27,32 @@ class Profile(models.Model):
     subscribed = models.CharField(_('Subscribed or not'), max_length=2, blank=True, null=True)
 
 
+class Image(models.Model):
+    img = models.ImageField(upload_to="media")
+    name = models.CharField('Ime', max_length=20, null=True)
+
+    def image_tag(self):
+        return mark_safe('<img src="{0}" style="width:auto; height:200px;" />'.format(settings.BASE_URL + str(self.img)))
+
+    image_tag.short_description = 'Image'
+
+    class Meta:
+        verbose_name = _(u'slika')
+        verbose_name_plural = _(u'slike')
+
+    def __unicode__(self):
+       # return mark_safe('<img src="{0}" style="width:auto; height:30px;" />'.format(settings.BASE_URL + str(self.img)))
+        return '%s' % self.name
+
+    def __str__(self):
+        # return mark_safe('<img src="{0}" style="width:auto; height:30px;" />'.format(settings.BASE_URL + str(self.img)))
+        return '%s' % self.name
+
+
 class Product(models.Model):
     name = models.CharField('Izdelek', max_length=50)
     description = models.CharField('Opis', max_length=500)
-    product_image = models.ImageField('Slika', null=True)
+    product_image = models.ImageField('Slika', null=True, blank=True)
     price_no_vat = models.DecimalField('Cena brez DDV', max_digits=8, decimal_places=2)
     price_with_vat = models.DecimalField('Cena z DDV', max_digits=8, decimal_places=2)
     vat = models.DecimalField('Cena z DDV', max_digits=8, decimal_places=1)
@@ -80,10 +106,13 @@ class BankAccount(models.Model):
 
 class Event(models.Model):
     name = models.CharField('Generalni dogodek', max_length=50)
+    short_description = models.CharField('kratek opis', max_length=30, null=True)
     description = models.CharField('Opis', max_length=500)
     date_from = models.DateField('Pričetek', null=True)
     date_to = models.DateField('Zaključek', null=True)
     independently_sold = models.BooleanField('Možen je nakup posamičnih vstopnic', default=False)
+    img_event = models.ForeignKey(Image, verbose_name='slika', null=True)
+    btn_type = models.CharField('Napis na gumbu', max_length=50, default=None)
 
     def __unicode__(self):
         return '%s' % self.name
@@ -251,6 +280,10 @@ class Offer(models.Model):
             self.total_with_vat += price_with_vat
             self.total_with_discount += price_with_discount
 
+            self.total_no_vat.quantize(Decimal(1.00), rounding=ROUND_HALF_EVEN)
+            self.total_with_vat.quantize(Decimal(1.00), rounding=ROUND_HALF_EVEN)
+            self.total_with_discount.quantize(Decimal(1.00), rounding=ROUND_HALF_EVEN)
+
         super(Offer, self).save()
 
         return product_with_prices
@@ -316,7 +349,7 @@ class Invoice(models.Model):
             'date': self.date,
             'total_no_vat': offer.total_no_vat,
             'total_with_vat': offer.total_with_vat,
-            'total_with_discount': offer.total_with_discount,
+            'total_with_discount': round(offer.total_with_discount, 2)
         }
 
         pdf_path = generate_pdf('invoice.html', html_context, 'invoices', str(self.invoice_number) + '.pdf')
