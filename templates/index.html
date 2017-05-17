@@ -78,10 +78,17 @@
                     <div class="col-md-12 event_name event"> {{ next_event.name }} </div>
                     <div class="col-md-12 event_description event"> {{ next_event.short_description }} </div>
                     <div class="col-md-3 col-md-offset-3">
-                        <button class="btn btn-success btn-lg btn-cost col-md-12 {% if next_event.btn_type == 'Prihaja kmalu' %} disabled {% endif %}"> {{ next_event.btn_type }} </button>
+                            <a {% if next_event.btn_type == 'Prihaja kmalu' %} href= "" {% else %}href="{% url 'tickets' pk=next_event.id %}" {% endif %}>
+                                <button class="btn btn-success btn-lg btn-cost col-md-12 {% if next_event.btn_type == 'Prihaja kmalu' %} disabled {% endif %}">
+                                    {{ next_event.btn_type }}
+                                </button>
+                            </a>
+
                     </div>
                     <div class="col-md-3">
-                        <button class="btn btn-success btn-lg btn-cost col-md-12"> Več o tem </button>
+                        <a href="{% url 'more' pk=next_event.id %}">
+                            <button class="btn btn-success btn-lg btn-cost col-md-12"> Več o tem </button>
+                        </a>
                     </div>
                 </div>
             </div>
