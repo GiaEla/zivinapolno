@@ -1,6 +1,6 @@
 from datetime import timedelta, datetime
 from decimal import Decimal
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AbstractUser
 from django.db import models
 from django.forms import ModelForm
 from django.utils.translation import ugettext_lazy as _
@@ -14,13 +14,14 @@ from utils.generators import generate_object_number, generate_price_with_vat, ge
 # from wrapps.invoice_wrapper import OfferWrapper
 
 
-class Profile(models.Model):
-    user = models.OneToOneField(User)
-    address = models.CharField(_('Address'), max_length=50, blank=True, null=True)
-    city = models.CharField(_('City'), max_length=40, blank=True, null=True)
-    post = models.CharField(_('Last name'), max_length=40, blank=True, null=True)
+class UserProfile(AbstractUser):
+    first_name = models.CharField(_('Ime'), max_length=50, blank=True, null=True)
+    last_name = models.CharField(_('Priimek'), max_length=50, blank=True, null=True)
+    address = models.CharField(_('Naslov'), max_length=50, blank=True, null=True)
+    city = models.CharField(_('Kraj'), max_length=40, blank=True, null=True)
+    post = models.CharField(_('Poštna številka'), max_length=40, blank=True, null=True)
     token = models.CharField(_('Token'), max_length=15, unique=True, db_index=True, null=True)
-    subscribed = models.CharField(_('Subscribed or not'), max_length=2, blank=True, null=True)
+    subscribed = models.CharField(_('Obveščanje'), max_length=2, blank=True, null=True)
 
 
 class Product(models.Model):
@@ -162,7 +163,7 @@ class Offer(models.Model):
     total_no_vat = models.DecimalField('Znesek brez DDV', max_digits=8, decimal_places=2, default=0, editable=False)
     total_with_vat = models.DecimalField('Znesek z DDV', max_digits=8, decimal_places=2, default=0, editable=False)
     total_with_discount = models.DecimalField('Znesek s popustom', max_digits=8, decimal_places=2, default=0, editable=False)
-    recipient = models.ForeignKey(User, verbose_name='Prejemnik')
+    recipient = models.ForeignKey(UserProfile, verbose_name='Prejemnik')
     reference = models.ForeignKey('Reference', verbose_name='Referenca')
     bank_account = models.ForeignKey('BankAccount', verbose_name='Bančni račun')
     payed = models.BooleanField('Plačano', default=False)

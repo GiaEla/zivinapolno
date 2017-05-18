@@ -80,8 +80,12 @@ WSGI_APPLICATION = 'zivinapolno.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'napolno',
+        'USER': 'napolno',
+        'PASSWORD': 'napolno',
+        'HOST': '192.168.1.69',
+        'PORT': '5432',
     }
 }
 
@@ -139,3 +143,5 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
 WKTHMLTOPDF_PATH = b'C:\Program Files\wkhtmltopdf\\bin\wkhtmltopdf.exe'
+
+AUTH_USER_MODEL = 'pro.UserProfile'
