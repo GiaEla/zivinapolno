@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+BASE_URL = 'http://127.0.0.1:8000/'
+
 
 # Application definition
 
@@ -141,6 +143,10 @@ DEFAULT_TO_EMAIL = 'spela.giacomelli@gmail.com'
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+MEDIA_URL = "/"
 
 WKTHMLTOPDF_PATH = b'C:\Program Files\wkhtmltopdf\\bin\wkhtmltopdf.exe'
 
