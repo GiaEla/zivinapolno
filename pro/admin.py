@@ -220,6 +220,8 @@ class EventAdmin(NestedModelAdmin):
     form = EventForm
     inlines = [EventDetailInline]
 
+
+
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Offer, OfferAdmin)
 admin.site.register(Invoice, InvoiceAdmin)
@@ -231,3 +233,4 @@ admin.site.register(Event, EventAdmin)
 admin.site.register(EventDetail, EventDetailAdmin)
 admin.site.register(Discount, DiscountAdmin)
 admin.site.register(Image, ImageAdmin)
+admin.site.register(UserProfile)
