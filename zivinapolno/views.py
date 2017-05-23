@@ -30,6 +30,7 @@ def register(request):
         if form.is_valid():
             registration = form.save(commit=False)
             registration.token = ''. join(choice(ascii_letters + digits) for i in range(15))
+            registration.set_password(request.form['password'])
             registration.save()
             return redirect('success.html')
 

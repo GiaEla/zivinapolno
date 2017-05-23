@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'pro',
     'reg',
-    'nested_inline'
+    'nested_inline',
+    'bootstrapform'
 ]
 
 MIDDLEWARE = [

@@ -17,14 +17,12 @@ from django.contrib.contenttypes.models import ContentType
 from utils.generators import generate_object_number, generate_price_with_vat, generate_pdf
 
 
-
-
 class UserProfile(AbstractUser):
     address = models.CharField(_('Naslov'), max_length=50, blank=True, null=True)
     city = models.CharField(_('Kraj'), max_length=40, blank=True, null=True)
     post = models.CharField(_('Poštna številka'), max_length=40, blank=True, null=True)
     token = models.CharField(_('Token'), max_length=15, unique=True, db_index=True, null=True)
-    subscribed = models.CharField(_('Obveščanje'), max_length=2, blank=True, null=True)
+    subscribed = models.BooleanField(_('Obveščanje'), default=True, blank=True)
 
 
 class Image(models.Model):

@@ -1,6 +1,16 @@
-<h1> Registration form </h1>
+<h1> Registracija </h1>
 
 <form method="POST" class="post-form"> {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="save btn btn-default">Save</button>
+    {% load bootstrap %}
+        {{ form.username|bootstrap }}
+        {{ form.first_name|bootstrap }}
+        {{ form.last_name|bootstrap }}
+        {{ form.email|bootstrap }}
+        {{ form.address|bootstrap }}
+        {{ form.city|bootstrap }}
+        {{ form.post|bootstrap }}
+        {{ form.subscribed|bootstrap }}
+        {{ form.password|bootstrap }}
+
+    <button type="submit" class="save btn btn-default">Registriraj se</button>
 </form>
