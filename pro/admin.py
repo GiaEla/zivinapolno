@@ -133,6 +133,7 @@ class EventForm(forms.ModelForm):
         ('Kupi karto', 'Kupi karto'),
         ('Prijavi se', 'Prijavi se'),
         ('Prihaja kmalu', 'Prihaja kmalu'),
+        ('Doniraj', 'Doniraj')
     )
 
     btn_type = forms.ChoiceField(choices=BTN_TYPE_CHOICES)
@@ -219,7 +220,6 @@ class EventAdmin(NestedModelAdmin):
     model = Event
     form = EventForm
     inlines = [EventDetailInline]
-
 
 
 admin.site.register(Product, ProductAdmin)

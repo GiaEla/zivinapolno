@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Prijava</title>
+</head>
+<body>
+    <h1> Prijava </h1>
+    <form method="POST" class="post-form"> {% csrf_token %}
+    {% load bootstrap %}
+        {% csrf_token %}
+        {{ form.username|bootstrap }}
+        {{ form.password|bootstrap }}
+    <button type="submit" class="save btn btn-default"> Prijava </button>
+</form>
+</body>
+</html>

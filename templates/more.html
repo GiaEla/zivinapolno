@@ -8,7 +8,14 @@
 
 <h1>{{ event_name }}</h1>
 <p>{{ description }}</p>
-{% include "ticket_form.html" %}
+
+
+{% if user.is_authenticated %}
+    Želite kupiti karto?
+{% else %}
+    Za nakup kart se morate prijaviti
+    {% include "ticket_form.html" %}
+{% endif %}
 
 </body>
 </html>

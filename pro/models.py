@@ -14,6 +14,7 @@ from django.http import HttpResponseRedirect, request
 from django.contrib import admin
 from django.contrib.contenttypes.models import ContentType
 
+
 from utils.generators import generate_object_number, generate_price_with_vat, generate_pdf
 
 
