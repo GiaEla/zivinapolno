@@ -1,10 +1,8 @@
 
-    {% block content %}
-    <form>
-        First name:<br>
-        <input type="text" name="firstname" placeholder="Mickey"><br>
-        Last name:<br>
-        <input type="text" name="lastname" placeholder="Mouse"><br><br>
-        <input type="submit" value="Submit">
+    <form method="POST" class="post-form"> {% csrf_token %}
+    {% load bootstrap %}
+        {% csrf_token %}
+        {{ form.username|bootstrap }}
+        {{ form.password|bootstrap }}
+    <button type="submit" class="save btn btn-default"> Prijava </button>
     </form>
-    {% endblock %}

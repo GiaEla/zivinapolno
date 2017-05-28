@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from pro.models import Invoice, Offer, Event, EventDetail
-from .forms import RegistrationForm, LoginForm
+from .forms import RegistrationForm, LoginForm, TicketForm
 from random import choice
 from string import ascii_letters, digits
 
@@ -14,6 +14,7 @@ def more(request, pk):
     # event = Event.objects.get(pk=pk)
     event = get_object_or_404(Event, id=pk)
     description = event.description
+    form = TicketForm()
 
     return render(request, 'more.html', {'event_name': event, 'title': event, 'description': description})
 
