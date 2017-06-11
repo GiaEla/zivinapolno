@@ -207,6 +207,7 @@ class OfferAdmin(admin.ModelAdmin):
 
 class EventDetailAdmin(admin.ModelAdmin):
     inlines = [ProductEventInline]
+    list_display = ('id',)
 
 
 class EventDetailInline(NestedStackedInline):

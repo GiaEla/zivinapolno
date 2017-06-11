@@ -1,8 +1,19 @@
+<hr>
 
-    <form method="POST" class="post-form"> {% csrf_token %}
-    {% load bootstrap %}
-        {% csrf_token %}
-        {{ form.username|bootstrap }}
-        {{ form.password|bootstrap }}
-    <button type="submit" class="save btn btn-default"> Prijava </button>
+<form method="POST" class="post-form">
+
+{% load bootstrap %}
+    {% csrf_token %}
+
+    {% for product in products %}
+        <label for="{{ product.id }}">{{ product.product.name }}</label>
+        <div class="input-group">
+          <input type="number" class="form-control" name="{{ product.id }}" aria-describedby="basic-addon3">
+        </div>
+    {% endfor %}
+        <hr>
+        <button type="submit" class="save btn btn-default"> Nakup </button>
+
     </form>
+
+</form>

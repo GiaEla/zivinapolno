@@ -1,5 +1,5 @@
 from django import forms
-from pro.models import UserProfile, Offer, Product
+from pro.models import UserProfile, Offer, Product, ProductQuantity
 
 
 class RegistrationForm(forms.ModelForm):
@@ -28,8 +28,10 @@ class LoginForm(forms.ModelForm):
 
 
 class TicketForm(forms.ModelForm):
+    quantities = forms.IntegerField()
+
     class Meta:
         model = Offer
         products = forms.ModelMultipleChoiceField(queryset=Product.objects.all())
-        fields =('products',)
+        fields =('products', 'quantities')
 

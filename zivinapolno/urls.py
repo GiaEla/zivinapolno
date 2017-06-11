@@ -30,7 +30,7 @@ urlpatterns = [
     url(r'^register$', register, name="register"),
     url(r'^success$', success, name="success"),
     url(r'^login/$', auth_views.login, name='login'),
-    url(r'^logout/$', auth_views.logout, name='logout'),
+    url(r'^logout/$', auth_views.logout, {'next_page': '//'}, name='logout')
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

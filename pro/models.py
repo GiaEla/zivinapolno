@@ -112,6 +112,7 @@ class Event(models.Model):
     independently_sold = models.BooleanField('Možen je nakup posamičnih vstopnic', default=False)
     img_event = models.ForeignKey(Image, verbose_name='slika', null=True)
     btn_type = models.CharField('Napis na gumbu', max_length=50, default=None)
+    reference = models.ForeignKey(Reference, verbose_name="referenca")
 
     def __unicode__(self):
         return '%s' % self.name
@@ -191,8 +192,16 @@ class Offer(models.Model):
     total_with_vat = models.DecimalField('Znesek z DDV', max_digits=8, decimal_places=2, default=0, editable=False)
     total_with_discount = models.DecimalField('Znesek s popustom', max_digits=8, decimal_places=2, default=0, editable=False)
     recipient = models.ForeignKey(UserProfile, verbose_name='Prejemnik')
-    reference = models.ForeignKey('Reference', verbose_name='Referenca')
-    bank_account = models.ForeignKey('BankAccount', verbose_name='Bančni račun')
+    reference = models.ForeignKey('Reference',
+                                  verbose_name='Referenca',
+                                  null=True,
+                                  blank=True,
+                                  default=1)
+    bank_account = models.ForeignKey('BankAccount',
+                                     verbose_name='Bančni račun',
+                                     null=True,
+                                     blank=True,
+                                     default=1)
     payed = models.BooleanField('Plačano', default=False)
     pay_until = models.DateField('Rok plačila', null=True, editable=False)
 
