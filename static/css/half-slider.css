@@ -1,15 +1,9 @@
-/*
- * Start Bootstrap - Half Slider (http://startbootstrap.com/)
- * Copyright 2013-2016 Start Bootstrap
- * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
- */
+/*all sizes*/
 
 html,
 body {
     height: 100%;
 }
-
-/* You can change the height of the carousel by changing the height in the class below. It is set to 50% by default, but can be any height! */
 
 .carousel {
     height: 60%;
@@ -33,43 +27,54 @@ body {
     -o-background-size: cover;
 }
 
-.event{
-    text-transform: lowercase;
-    text-align: center;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, .6);
-    position: relative;
-}
-
-.event_name{
-
-    font-family: 'Caveat brush','Amatic SC', cursive;
-    font-weight: bolder;
-    font-size: 110px;
-    opacity: 0.8;
-    top: -280px;
-}
-
-.event_description{
-    font-family: 'Amatic SC', cursive;
-    font-size: 40px;
-    opacity: 0.9;
-    top: -315px;
-}
-
-.btn-cost{
-    opacity: 0.8;
-    font-family: 'Amatic SC', cursive;
-    font-size: 180%;
-    font-weight: bold;
-}
-
-
-.napolni{
-    color: #ffaa00;
-    font-family: 'Amatic SC', cursive;
-    font-weight: bold;
-
-}
 footer {
-    margin: 50px 0;
+    margin: 0px 0;
 }
+
+.title{
+    font-family: Caveat Brush, Amatic SC, cursive;
+
+    /*opacity: 50%;*/
+}
+
+.description{
+    font-family: Amatic SC, cursive;
+
+}
+
+/*phones*/
+
+
+/*landscape phones*/
+@media (min-width: 576px){
+
+}
+
+/*tablets*/
+@media (min-width: 768px) {
+
+}
+
+
+/*desktops*/
+@media (min-width: 992px) {
+    .title{
+        font-size: 130px;
+    }
+    .description{
+        font-size: 40px;
+    }
+}
+
+/*extra large desktops*/
+@media (min-width: 1200px) {
+
+}
+
+
+
+
+/*costum css for slider*/
+
+
+

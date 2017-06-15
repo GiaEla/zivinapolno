@@ -5,6 +5,8 @@
 {% block form %}
     <form method="POST" class="post-form"> {% csrf_token %}
     {% load bootstrap %}
+        {{ form.username|bootstrap }}
+        {{ form.password|bootstrap }}
         {{ form.email|bootstrap }}
         {{ form.first_name|bootstrap }}
         {{ form.last_name|bootstrap }}
@@ -12,7 +14,6 @@
         {{ form.city|bootstrap }}
         {{ form.post|bootstrap }}
         {{ form.subscribed|bootstrap }}
-        {{ form.password|bootstrap }}
 
     <button type="submit" class="save btn btn-default">Registriraj se</button>
 </form>

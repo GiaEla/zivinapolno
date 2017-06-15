@@ -152,5 +152,3 @@ MEDIA_URL = "/"
 WKTHMLTOPDF_PATH = b'C:\Program Files\wkhtmltopdf\\bin\wkhtmltopdf.exe'
 
 AUTH_USER_MODEL = 'pro.UserProfile'
-
-AUTHENTICATION_BACKENDS = ['pro.my_backend.UserBackend']

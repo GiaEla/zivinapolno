@@ -67,6 +67,7 @@ def register(request):
         if form.is_valid():
             registration = form.save(commit=False)
             registration.token = ''. join(choice(ascii_letters + digits) for i in range(15))
+            registration.is_active = False
             registration.save()
             return redirect('success')
 
