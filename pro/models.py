@@ -405,8 +405,11 @@ class ProductQuantity(models.Model):
 
 class Activity(models.Model):
     name = models.CharField('Dejavnost', max_length=50)
-    description = models.CharField('Opis', max_length=500)
-    image = models.ImageField('Slika', null=True)
+    short_description = models.CharField('Enostavčni opis', max_length=100, null=False)
+    description = models.CharField('Opis', max_length=500, null=True)
+    image = models.ImageField('Slika', null=False)
+    link = models.CharField('Povezava', max_length=150, null=True, blank=True)
+    z_index = models.PositiveSmallIntegerField('Zaporedni prikaz na strani', unique=True, null=True, blank=True)
 
     class Meta:
         verbose_name = _(u'dejavnost zavoda')

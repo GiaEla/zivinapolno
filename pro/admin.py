@@ -170,7 +170,7 @@ class ProductAdmin(admin.ModelAdmin):
 class ImageAdmin(admin.ModelAdmin):
     fields = ('image_tag', 'img', 'name')
     readonly_fields = ('image_tag',)
-    list_display = ('name','image_tag')
+    list_display = ('name', 'image_tag')
 
 
 class DiscountAdmin(admin.ModelAdmin):
@@ -225,6 +225,9 @@ class EventAdmin(NestedModelAdmin):
 class UserProfileAdmin(admin.ModelAdmin):
     list_display = ('email',)
 
+class ActivityAdmin(admin.ModelAdmin):
+    list_display = ('name', 'z_index')
+
 
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Offer, OfferAdmin)
@@ -232,7 +235,7 @@ admin.site.register(Invoice, InvoiceAdmin)
 admin.site.register(Reference)
 admin.site.register(BankAccount)
 admin.site.register(ProductEvent, ProductEventAdmin)
-admin.site.register(Activity)
+admin.site.register(Activity, ActivityAdmin)
 admin.site.register(Event, EventAdmin)
 admin.site.register(EventDetail, EventDetailAdmin)
 admin.site.register(Discount, DiscountAdmin)

@@ -58,61 +58,28 @@
 {% block content %}
     <!-- Page Content -->
 <div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-4 gly-div-header">
-                <span class="glyphicon glyphicon-heart gly-header" aria-hidden="true"></span>
-                <h1 class="napolni">Napolni srce</h1>
-                <p>
-                    Ljubi svojega bližnjega kot samega sebe.
-                </p>
-            </div>
-            <div class="col-md-4 gly-div-header">
-                <span class="glyphicon glyphicon-fire gly-header" aria-hidden="true"></span>
-                <h1 class="napolni">Napolni duha</h1>
-            </div>
-            <div class="col-md-4 gly-div-header">
-                <span class="glyphicon glyphicon-road gly-header" aria-hidden="true"></span>
-                <h1 class="napolni">Napolni vsakdan</h1>
-            </div>
-        </div>
-    </div>
 
-    <hr>
-
-        <hr class="featurette-divider">
-
+    {% for activity in all_activities %}
     <div class="featurette" id="center">
-        <img class="featurette-image img-circle img-responsive pull-right" src="http://placehold.it/500x500">
-        <h2 class="featurette-heading">Center
-            <span class="text-muted">Živi na polno</span>
-        </h2>
-        <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+        <img class="featurette-image img-circle img-responsive {% if forloop.counter|divisibleby:2 %}pull-right {% else %}pull-left{% endif %}" src="{{ activity.image.url}}">
+        <h2 class="featurette-heading"> {{ activity.name }}</h2>
+        <p class="lead"> {{ activity.description }} </p>
     </div>
 
     <hr class="featurette-divider">
+    {% endfor %}
 
-    <div class="featurette" id="services">
-        <img class="featurette-image img-circle img-responsive pull-left" src="http://placehold.it/500x500">
-        <h2 class="featurette-heading">The Second Heading
-            <span class="text-muted">Is Pretty Cool Too.</span>
-        </h2>
-        <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-    </div>
+</div> {#    end container#}
 
-    <hr class="featurette-divider">
-
-    <div class="featurette" id="contact">
-        <img class="featurette-image img-circle img-responsive pull-right" src="http://placehold.it/500x500">
-        <h2 class="featurette-heading">The Third Heading
-            <span class="text-muted">Will Seal the Deal.</span>
-        </h2>
-        <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-    </div>
+<div id="donate">
 
 
+</div>
 
-</div> end container
+<div id="contact">
+
+
+</div>
     <!-- Script to Activate the Carousel -->
     <script>
     $('.carousel').carousel({

@@ -21,7 +21,6 @@ from django.contrib.auth import views as auth_views
 
 from zivinapolno.views import index, more, tickets, register, success, login
 
-
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', index, name='index'),

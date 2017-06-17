@@ -6,7 +6,7 @@ body {
 }
 
 .carousel {
-    height: 60%;
+    height: 100%;
 }
 
 .item,
@@ -25,10 +25,6 @@ body {
     -moz-background-size: cover;
     background-size: cover;
     -o-background-size: cover;
-}
-
-footer {
-    margin: 0px 0;
 }
 
 .title{

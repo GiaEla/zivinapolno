@@ -1,7 +1,7 @@
 import datetime
 
 from django.shortcuts import render, get_object_or_404, redirect
-from pro.models import Invoice, Offer, Event, EventDetail, Product, ProductEvent, ProductQuantity
+from pro.models import Invoice, Offer, Event, EventDetail, Product, ProductEvent, ProductQuantity, Activity
 from .forms import RegistrationForm, LoginForm, TicketForm
 from random import choice
 from string import ascii_letters, digits
@@ -9,7 +9,9 @@ from string import ascii_letters, digits
 
 def index(request):
     next_events = Event.objects.all().order_by('date_from')[:3]
-    return render(request, 'index.html', {'next_events': next_events})
+    all_activities = Activity.objects.all().order_by('z_index')
+
+    return render(request, 'index.html', {'next_events': next_events, 'all_activities': all_activities})
 
 
 def more(request, pk):
@@ -91,3 +93,4 @@ def login(request):
         form = LoginForm()
 
     return render(request, 'registration/login.html', {'form': form})
+
