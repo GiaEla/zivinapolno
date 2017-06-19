@@ -67,7 +67,7 @@ def generate_selected_pdf(modeladmin, request, queryset):
 generate_pdf.short_description = "Izvozi kot .pdf"
 
 
-def mail(modeladmin, request, queryset):
+def admin_mail(modeladmin, request, queryset):
     for obj in queryset:
         subject = ''
         message = ''
@@ -194,14 +194,14 @@ class ProductQuantityAdmin(admin.ModelAdmin):
 class InvoiceAdmin(admin.ModelAdmin):
     readonly_fields = ('invoice_number', 'offer')
     list_display = ('invoice_number', 'offer')
-    actions = [generate_selected_pdf, mail]
+    actions = [generate_selected_pdf, admin_mail]
 
 
 class OfferAdmin(admin.ModelAdmin):
     inlines = [ProductQuantityInline]
     readonly_fields = ('offer_number', 'total_no_vat', 'total_with_vat', 'total_with_discount')
     list_display = ('offer_number', 'date', 'total_with_vat',)
-    actions = [generate_selected_pdf, is_payed, mail]
+    actions = [generate_selected_pdf, is_payed, admin_mail]
 
 
 

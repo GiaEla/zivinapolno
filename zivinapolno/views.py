@@ -1,7 +1,10 @@
 import datetime
 
 from django.shortcuts import render, get_object_or_404, redirect
+
+from pro.admin import admin_mail
 from pro.models import Invoice, Offer, Event, EventDetail, Product, ProductEvent, ProductQuantity, Activity
+from utils.costumer_related import mail
 from .forms import RegistrationForm, LoginForm, TicketForm
 from random import choice
 from string import ascii_letters, digits
@@ -38,10 +41,9 @@ def more(request, pk):
                 product_quantity.product = None
                 product_quantity.save()
 
+        mail(offer)
 
         return render(request, 'bought_tickets.html', {'adress': adress})
-
-
 
     else:
         event = get_object_or_404(Event, id=pk)
@@ -69,7 +71,6 @@ def register(request):
         if form.is_valid():
             registration = form.save(commit=False)
             registration.token = ''. join(choice(ascii_letters + digits) for i in range(15))
-            registration.is_active = False
             registration.save()
             return redirect('success')
 
@@ -88,6 +89,8 @@ def login(request):
     if request.method == "POST":
         if form.is_valid():
             return redirect('index.html')
+        else:
+            return redirect('error.html')
 
     else:
         form = LoginForm()

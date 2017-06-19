@@ -12,6 +12,7 @@
 
 </head>
 <body>
+    {% csrf_token %}
     <div> Pozdravljeni, {{ recipient }} <br>
         V prilogi vam pošiljamo {{ type }} z dne {{ date }}. <br>
         Poln dan vam želimo <br>

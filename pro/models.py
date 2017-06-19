@@ -5,15 +5,16 @@ from decimal import Decimal, ROUND_HALF_EVEN, Context
 
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.core.mail import EmailMessage
 from django.db import models
 from django.forms import ModelForm
+from django.template.loader import render_to_string
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from django.http import HttpResponseRedirect, request
 from django.contrib import admin
 from django.contrib.contenttypes.models import ContentType
-
 
 from utils.generators import generate_object_number, generate_price_with_vat, generate_pdf
 
@@ -315,6 +316,35 @@ class Offer(models.Model):
 
         return pdf_path
 
+    def send_invoice(queryset):
+
+        subject = ''
+        message = ''
+        pdf_path = ''
+
+        queryset.generate_pdf()
+        html_context = {
+            'recipient': queryset.recipient,
+            'type': 'račun',
+            'date': queryset.date.date()
+        }
+
+        subject = 'Račun št.' + str(queryset.offer_number)
+        message = render_to_string('mail/pdf_offer_invoice.html', html_context)
+        recipient_mail = queryset.recipient.email
+        pdf_path = settings.STATICFILES_DIRS[0] + '\\pdfs\\offers\\' + str(queryset.offer_number) + '.pdf'
+
+        email = EmailMessage(
+            subject,
+            message,
+            'giacotesting@gmail.com',
+            [recipient_mail],
+        )
+
+        email.attach_file(pdf_path)
+        email.content_subtype = 'html'
+        email.send()
+
     def save(self, *args, **kwargs):
         # if new offer, it generates number, otherwise it's not overwritten
         if self.offer_number is None:
@@ -331,6 +361,7 @@ class Offer(models.Model):
             invoice = Invoice.objects.create()
             invoice.offer = self
             invoice.save()
+            self.send_invoice()
 
         super(Offer, self).save(*args, **kwargs)
 

@@ -133,7 +133,7 @@ EMAIL_PORT = 587
 
 EMAIL_HOST_USER = 'giacotesting@gmail.com'
 
-EMAIL_HOST_PASSWORD = 'nimaveze123'
+EMAIL_HOST_PASSWORD = 'Test123!'
 
 DEFAULT_FROM_EMAIL = 'giacotesting@gmail.com'
 
