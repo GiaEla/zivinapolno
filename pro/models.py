@@ -304,7 +304,7 @@ class Offer(models.Model):
             'offer_number': self.offer_number,
             'total_no_vat': self.total_no_vat,  # calculated in ProductQuantity save method
             'total_with_vat': self.total_with_vat,
-            'total_with_discount': self.total_with_discount,
+            'total_with_discount': round(self.total_with_discount, 2),
             'place': self.place,
             'date': self.date,
             'bank_account': self.bank_account.account,
@@ -316,23 +316,23 @@ class Offer(models.Model):
 
         return pdf_path
 
-    def send_invoice(queryset):
+    def send_invoice(self, invoice):
 
         subject = ''
         message = ''
         pdf_path = ''
 
-        queryset.generate_pdf()
         html_context = {
-            'recipient': queryset.recipient,
+            'recipient': self.recipient,
             'type': 'račun',
-            'date': queryset.date.date()
+            'date': invoice.date
         }
+        generate_pdf('invoice.html', html_context, 'invoices', str(invoice.invoice_number))
 
-        subject = 'Račun št.' + str(queryset.offer_number)
+        subject = 'Račun št.' + str(invoice.invoice_number)
         message = render_to_string('mail/pdf_offer_invoice.html', html_context)
-        recipient_mail = queryset.recipient.email
-        pdf_path = settings.STATICFILES_DIRS[0] + '\\pdfs\\offers\\' + str(queryset.offer_number) + '.pdf'
+        recipient_mail = self.recipient.email
+        pdf_path = settings.STATICFILES_DIRS[0] + '\\pdfs\\invoices\\' + str(invoice.invoice_number) + '.pdf'
 
         email = EmailMessage(
             subject,
@@ -361,7 +361,7 @@ class Offer(models.Model):
             invoice = Invoice.objects.create()
             invoice.offer = self
             invoice.save()
-            self.send_invoice()
+            self.send_invoice(invoice)
 
         super(Offer, self).save(*args, **kwargs)
 

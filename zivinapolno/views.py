@@ -4,7 +4,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 
 from pro.admin import admin_mail
 from pro.models import Invoice, Offer, Event, EventDetail, Product, ProductEvent, ProductQuantity, Activity
-from utils.costumer_related import mail
+from utils.costumer_related import mail, create_offer
 from .forms import RegistrationForm, LoginForm, TicketForm
 from random import choice
 from string import ascii_letters, digits
@@ -20,37 +20,16 @@ def index(request):
 def more(request, pk):
 
     if request.method == "POST":
-        offer = Offer()
-        offer.date = datetime.datetime.now()
-        offer.place = "Center Živi na polno, Ljubljana"
-        offer.recipient = request.user
-        offer.payed = False
-        offer.save()
-
-        adress = request.user.email
-        ordered = request.POST
-
-        for key, value in ordered.items():
-            if key == 'csrfmiddlewaretoken':
-                continue
-            else:
-                product_quantity = ProductQuantity()
-                product_quantity.product_event = ProductEvent.objects.get(id=int(key))
-                product_quantity.offer = offer
-                product_quantity.qt_value = int(value)
-                product_quantity.product = None
-                product_quantity.save()
-
+        offer = create_offer(request.user, request.POST)
         mail(offer)
 
-        return render(request, 'bought_tickets.html', {'adress': adress})
+        return render(request, 'bought_tickets.html', {'adress': request.user.email})
 
     else:
         event = get_object_or_404(Event, id=pk)
         description = event.description
         event_detail = EventDetail.objects.filter(event=event)
         products = ProductEvent.objects.filter(event_detail=event_detail)
-        # quantities = ProductQuantity(product_event= products, qt_value= 0)
 
         return render(request, 'more.html', {
                                                 'event_name': event,
@@ -60,8 +39,22 @@ def more(request, pk):
 
 
 def tickets(request, pk):
-    event = get_object_or_404(Event, id=pk)
-    return render(request, 'tickets.html', {'event_name': event})
+
+    if request.method == "POST":
+        offer = create_offer(request.user, request.POST)
+        mail(offer)
+
+        return render(request, 'bought_tickets.html', {'adress': request.user.email})
+
+    else:
+        event = get_object_or_404(Event, id=pk)
+        event_detail = EventDetail.objects.filter(event=event)
+        products = ProductEvent.objects.filter(event_detail=event_detail)
+
+        return render(request, 'tickets.html', {
+                                                'event_name': event,
+                                                'products': products,
+                                            })
 
 
 def register(request):

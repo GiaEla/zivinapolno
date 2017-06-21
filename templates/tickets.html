@@ -1,13 +1,22 @@
+{% extends "base.html" %}
+
 {% block title %}
-    {{ title }}
+    {{ event_name }}
 {% endblock %}
 
 {% block header %}
-    Kupi karto za {{ event_name }}
+<h1>{{ event_name }}</h1>
 {% endblock %}
 
+
 {% block content %}
-        {%  %}
+{% if user.is_authenticated %}
+    <hr>
+    {% include 'ticket_form.html' %}
+{% else %}
+    Za nakup kart se morate prijaviti
+    <a href="{% url 'login' %}">Login</a>
+{% endif %}
 {% endblock %}
 
 

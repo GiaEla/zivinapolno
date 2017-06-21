@@ -1,11 +1,38 @@
+import datetime
+
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from django.conf import settings
 
-from pro.models import Offer, Invoice
+from pro.models import Offer, Invoice, ProductQuantity, ProductEvent
+
+
+def create_offer(user, product_quantities):
+        offer = Offer()
+        offer.date = datetime.datetime.now()
+        offer.place = "Center Živi na polno, Ljubljana"
+        offer.recipient = user
+        offer.payed = False
+        offer.save()
+
+        for key, value in product_quantities.items():
+            if key == 'csrfmiddlewaretoken':
+                continue
+            elif value == "0":
+                continue
+            else:
+                product_quantity = ProductQuantity()
+                product_quantity.product_event = ProductEvent.objects.get(id=int(key))
+                product_quantity.offer = offer
+                product_quantity.qt_value = int(value)
+                product_quantity.product = None
+                product_quantity.save()
+
+        return offer
 
 
 def mail(queryset):
+    """ Sends mail with attachment (offer or invoice) users email"""
 
     subject = ''
     message = ''
