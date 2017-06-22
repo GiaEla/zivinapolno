@@ -62,7 +62,7 @@
     {% for activity in all_activities %}
     <div class="featurette" id="center">
         <img class="featurette-image img-circle img-responsive {% if forloop.counter|divisibleby:2 %}pull-right {% else %}pull-left{% endif %}" src="{{ activity.image.url}}">
-        <h2 class="featurette-heading"> {{ activity.name }}</h2>
+        <a href="{% url 'activities' pk=activity.id %}"> <h2 class="featurette-heading"> {{ activity.name }}</h2> </a>
         <p class="lead"> {{ activity.description }} </p>
     </div>
 

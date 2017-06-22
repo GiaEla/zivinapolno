@@ -3,7 +3,7 @@ import datetime
 from django.shortcuts import render, get_object_or_404, redirect
 
 from pro.admin import admin_mail
-from pro.models import Invoice, Offer, Event, EventDetail, Product, ProductEvent, ProductQuantity, Activity
+from pro.models import Invoice, Offer, Event, EventDetail, Product, ProductEvent, ProductQuantity, Activity, SubActivity
 from utils.costumer_related import mail, create_offer
 from .forms import RegistrationForm, LoginForm, TicketForm
 from random import choice
@@ -90,3 +90,15 @@ def login(request):
 
     return render(request, 'registration/login.html', {'form': form})
 
+
+def about(request, pk):
+
+    activity = get_object_or_404(Activity, pk=pk)
+    description = activity.description
+    sub_activities = SubActivity.objects.filter(activity=activity)
+
+    return render(request, 'about.html', {
+                                            'activity': activity,
+                                            'description': description,
+                                            'sub_activities': sub_activities,
+                                        })

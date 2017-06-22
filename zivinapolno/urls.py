@@ -19,7 +19,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 
-from zivinapolno.views import index, more, tickets, register, success, login
+from zivinapolno.views import index, more, tickets, register, success, login, about
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -30,6 +30,7 @@ urlpatterns = [
     url(r'^success/$', success, name="success"),
     url(r'^login/$', auth_views.login, name='login'),
     url(r'^logout/$', auth_views.logout, {'next_page': '/'}, name='logout'),
+    url(r'^dejavnost/(?P<pk>\d+)/$', about, name="activities"),
     # url('^', include('django.contrib.auth.urls')),
 ]
 if settings.DEBUG:

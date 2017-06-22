@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ activity }}
+{% endblock %}
+
+
+{% block content %}
+    {{ activity }}
+    {{ description }}
+
+{% for sub_activity in  sub_activities %}
+
+   <div class="featurette" id="center">
+        <img class="featurette-image img-circle img-responsive {% if forloop.counter|divisibleby:2 %}pull-right {% else %}pull-left{% endif %}" src="{{ sub_activity.image.url}}">
+        <h2 class="featurette-heading"> {{ sub_activity.name }}</h2>
+        <p class="lead"> {{ sub_activity.description }} </p>
+    </div>
+
+    <hr class="featurette-divider">
+
+{% endfor %}
+{% endblock %}

@@ -453,3 +453,23 @@ class Activity(models.Model):
         return '%s' % self.name
 
 
+class SubActivity(models.Model):
+    name = models.CharField('Dejavnost', max_length=50)
+    short_description = models.CharField('Enostavčni opis', max_length=100, null=False)
+    description = models.CharField('Opis', max_length=500, null=True)
+    image = models.ImageField('Slika', null=False)
+    link = models.CharField('Povezava', max_length=150, null=True, blank=True)
+    z_index = models.PositiveSmallIntegerField('Zaporedni prikaz na strani', unique=True, null=True, blank=True)
+    activity = models.ForeignKey('Activity', verbose_name="Spada k dejavnosti")
+
+    class Meta:
+        verbose_name = _(u'del večje dejavnosti')
+        verbose_name_plural = _(u'deli večje dejavnosti')
+
+    def __unicode__(self):
+        return '%s' % self.name
+
+    def __str__(self):
+        return '%s' % self.name
+
+

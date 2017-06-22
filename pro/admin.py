@@ -222,11 +222,17 @@ class EventAdmin(NestedModelAdmin):
     form = EventForm
     inlines = [EventDetailInline]
 
+
 class UserProfileAdmin(admin.ModelAdmin):
     list_display = ('email',)
 
+
 class ActivityAdmin(admin.ModelAdmin):
     list_display = ('name', 'z_index')
+
+
+class SubActivityAdmn(admin.ModelAdmin):
+    list_display = ('name', 'z_index', 'activity')
 
 
 admin.site.register(Product, ProductAdmin)
@@ -241,3 +247,4 @@ admin.site.register(EventDetail, EventDetailAdmin)
 admin.site.register(Discount, DiscountAdmin)
 admin.site.register(Image, ImageAdmin)
 admin.site.register(UserProfile, UserProfileAdmin)
+admin.site.register(SubActivity, SubActivityAdmn)
