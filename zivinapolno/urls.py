@@ -31,6 +31,8 @@ urlpatterns = [
     url(r'^login/$', auth_views.login, name='login'),
     url(r'^logout/$', auth_views.logout, {'next_page': '/'}, name='logout'),
     url(r'^dejavnost/(?P<pk>\d+)/$', about, name="activities"),
+    url(r'^poddejavnost/(?P<pk>\d+)/$', about, name="sub_activities"),
+
     # url('^', include('django.contrib.auth.urls')),
 ]
 if settings.DEBUG:

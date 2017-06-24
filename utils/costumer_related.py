@@ -74,3 +74,28 @@ def mail(queryset):
     email.attach_file(pdf_path)
     email.content_subtype = 'html'
     email.send()
+
+
+def activation_mail(user):
+    """ Sends activation mail"""
+
+    subject = ''
+    message = ''
+
+    html_context = {
+        'user': user,
+    }
+
+    subject = 'Aktivacija za email' + str(user.email)
+    message = render_to_string('registration/activate.html', html_context)
+    user_mail = user.email
+
+    email = EmailMessage(
+        subject,
+        message,
+        'giacotesting@gmail.com',
+        [user_mail],
+    )
+
+    email.content_subtype = 'html'
+    email.send()

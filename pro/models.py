@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.contrib.contenttypes.models import ContentType
 
 from utils.generators import generate_object_number, generate_price_with_vat, generate_pdf
+# from utils.costumer_related import activation_mail
 
 
 class UserProfile(AbstractUser):
@@ -25,6 +26,31 @@ class UserProfile(AbstractUser):
     post = models.CharField(_('Poštna številka'), max_length=40, blank=True, null=True)
     token = models.CharField(_('Token'), max_length=15, unique=True, db_index=True, null=True)
     subscribed = models.BooleanField(_('Obveščanje'), default=True, blank=True)
+    activated = models.BooleanField('aktiviran', default=False) # , editable=False)
+
+    def activation(self):
+        if self.activated is False:
+            # activation_mail(self) če pokličem iz costumer_related ustvarim circular dependency?
+            html_context = {
+                'user': self,
+            }
+
+            subject = 'Aktivacija za email' + str(self.email)
+            message = render_to_string('registration/activate.html', html_context)
+            user_mail = self.email
+
+            email = EmailMessage(
+                subject,
+                message,
+                'giacotesting@gmail.com',
+                [user_mail],
+            )
+
+            email.content_subtype = 'html'
+            email.send()
+            self.activated = True
+
+        super(UserProfile, self).save()
 
 
 class Image(models.Model):
@@ -92,6 +118,7 @@ class Reference(models.Model):
 class BankAccount(models.Model):
     name = models.CharField(max_length=50)
     account = models.CharField(max_length=30, null=False)
+    swift = models.CharField(max_length=20)
 
     def __unicode__(self):
         return '%s' % self.name

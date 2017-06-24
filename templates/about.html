@@ -6,6 +6,7 @@
 
 
 {% block content %}
+
     {{ activity }}
     {{ description }}
 
@@ -13,11 +14,15 @@
 
    <div class="featurette" id="center">
         <img class="featurette-image img-circle img-responsive {% if forloop.counter|divisibleby:2 %}pull-right {% else %}pull-left{% endif %}" src="{{ sub_activity.image.url}}">
-        <h2 class="featurette-heading"> {{ sub_activity.name }}</h2>
-        <p class="lead"> {{ sub_activity.description }} </p>
+        <a href="{% url 'sub_activities' pk=sub_activity.id %}"> <h2 class="featurette-heading"> {{ sub_activity.name }}</h2> </a>
+        <p class="lead"> {{ sub_activity.description|truncatewords:15 }} </p>
     </div>
 
     <hr class="featurette-divider">
 
 {% endfor %}
+
+    {{ activity }}
+    {{ description }}
+
 {% endblock %}

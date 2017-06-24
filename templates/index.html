@@ -63,7 +63,7 @@
     <div class="featurette" id="center">
         <img class="featurette-image img-circle img-responsive {% if forloop.counter|divisibleby:2 %}pull-right {% else %}pull-left{% endif %}" src="{{ activity.image.url}}">
         <a href="{% url 'activities' pk=activity.id %}"> <h2 class="featurette-heading"> {{ activity.name }}</h2> </a>
-        <p class="lead"> {{ activity.description }} </p>
+        <p class="lead"> {{ activity.description|truncatewords:15 }} </p>
     </div>
 
     <hr class="featurette-divider">
@@ -72,12 +72,44 @@
 </div> {#    end container#}
 
 <div id="donate">
+    Prinesite vso desetino v zakladnico, da bo zaloga v moji hiši, in preizkusite me s tem, govori Gospod nad vojskami, če vam tedaj ne odprem zapornic neba in ne izlijem na vas blagoslova do preobilja! (Mal 3,10)
 
+    Vsakdo naj da, kakor se je v srcu odločil, ne z žalostjo ali na silo, kajti Bog ljubi veselega darovalca. (2 Kor 9, 8)
+
+    Imamo jasno vizijo, potrebujemo pa sredstva, da jo lahko uresničimo. Zelo veseli smo vsakega tvojega daru, tudi najmanjšega.
+
+    <table>
+        <tr>
+            <th>TRR</th>
+            <th> SWIFT </th>
+        </tr>
+        {% for account in accounts %}
+        <tr>
+            <td> {{ account.account }} </td>
+            <td> {{ account.swift }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <table>
+        <tr>
+            <th> </th>
+            <th> SKLIC </th>
+        </tr>
+        {% for reference in references %}
+        <tr>
+            <td> {{ reference.name }} </td>
+            <td> {{ reference.reference }}</td>
+        </tr>
+        {% endfor %}
+    </table>
 
 </div>
 
 <div id="contact">
-
+    <div> <span class="glyphicon glyphicon-home" aria-hidden="true"></span> Kongresni trg 14 </div>
+    <div> <span class="glyphicon glyphicon-phone-alt" aria-hidden="true"></span> 064 110 020 </div>
+    <div> <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> zivinapolno@gmail.com </div>
 
 </div>
     <!-- Script to Activate the Carousel -->

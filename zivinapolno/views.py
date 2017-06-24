@@ -3,7 +3,8 @@ import datetime
 from django.shortcuts import render, get_object_or_404, redirect
 
 from pro.admin import admin_mail
-from pro.models import Invoice, Offer, Event, EventDetail, Product, ProductEvent, ProductQuantity, Activity, SubActivity
+from pro.models import Invoice, Offer, Event, EventDetail, Product, ProductEvent, ProductQuantity, Activity, SubActivity, \
+    BankAccount, Reference
 from utils.costumer_related import mail, create_offer
 from .forms import RegistrationForm, LoginForm, TicketForm
 from random import choice
@@ -13,8 +14,11 @@ from string import ascii_letters, digits
 def index(request):
     next_events = Event.objects.all().order_by('date_from')[:3]
     all_activities = Activity.objects.all().order_by('z_index')
+    accounts = BankAccount.objects.all()
+    references = Reference.objects.all()
 
-    return render(request, 'index.html', {'next_events': next_events, 'all_activities': all_activities})
+
+    return render(request, 'index.html', {'next_events': next_events, 'all_activities': all_activities, 'accounts': accounts, 'references': references})
 
 
 def more(request, pk):

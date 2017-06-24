@@ -9,11 +9,32 @@
 
     <h1>{{ event_name }}</h1>
     <p>{{ description }}</p>
+
     {% if user.is_authenticated %}
         <hr>
         {% include 'ticket_form.html' %}
     {% else %}
-        Za nakup kart se morate prijaviti
-        <a href="{% url 'login' %}">Login</a>
+{#        Za nakup kart se morate <a href="{% url 'login' %}"> prijaviti </a>#}
+        Za nakup kart se morate <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">prijaviti</button>
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Prijava</h4>
+                  </div>
+                  <div class="modal-body">
+{#                    {% include 'registration/login.html' %}#}
+                      {% include 'ticket_form.html' %}
+                  </div>
+                  <div class="modal-footer">
+                    <a href="{% url 'register' %}"> <button type="button" class="btn btn-default"> Registracija </button> </a>
+                  </div>
+                </div>
+
+          </div>
+        </div>
     {% endif %}
 {% endblock %}
