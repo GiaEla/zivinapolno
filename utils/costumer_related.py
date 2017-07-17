@@ -3,8 +3,11 @@ import datetime
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from django.conf import settings
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode
 
 from pro.models import Offer, Invoice, ProductQuantity, ProductEvent
+from utils.tokens import account_activation_token
 
 
 def create_offer(user, product_quantities):
@@ -82,8 +85,13 @@ def activation_mail(user):
     subject = ''
     message = ''
 
+    activation_link = settings.SITE_URL + 'potrditev/' + user.token + '/'
+
     html_context = {
         'user': user,
+        'uid': urlsafe_base64_encode(force_bytes(user.id)),
+        'token': account_activation_token.make_token(user),
+        'activation_link': activation_link,
     }
 
     subject = 'Aktivacija za email' + str(user.email)

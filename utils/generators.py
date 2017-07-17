@@ -71,5 +71,3 @@ def generate_pdf(template, context, dir_name, file_name):
     return relative_path
 
 
-
-

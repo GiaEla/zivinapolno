@@ -12,9 +12,8 @@
 
 </head>
 <body>
-    {% csrf_token %}
     <div> Pozdravljeni, {{ user }} <br>
-        Prosimo, potrdite svoj e-mail naslov {{ user.email }}. <br>
+        Prosimo, potrdite svoj e-mail naslov {{ user.token }} s klikom na <a href="{{ activation_link }}"> povezavo </a> <br>
         <div class="right">ekipa Zavoda Živi na polno</div>
         <p><small>Ta e-mail vam je bil poslan, ker ste se pred kratkim prijavili na spletni strani Zavoda Živi na polno. Če tega niste storili, prosimo, da sporočilo spregledate.</small></p>
     </div>

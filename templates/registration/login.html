@@ -1,10 +1,14 @@
 
-    {% block content %}
     <h1> Prijava </h1>
-    <form method="POST" class="post-form"> {% csrf_token %}
-    {% load bootstrap %}
-        {% csrf_token %}
-        {{ form.username|bootstrap }}
-        {{ form.password|bootstrap }}
+    <form method="POST" action="/login/" class="post-form">
+        <label for="username">Username</label>
+        <div class="input-group">
+          <input type="text" class="form-control" name="username" aria-describedby="basic-addon3">
+        </div>
+        <label for="password">Password</label>
+        <div class="input-group">
+          <input type="password" class="form-control" name="password" aria-describedby="basic-addon3">
+        </div>
     <button type="submit" class="save btn btn-default"> Prijava </button>
-    {% endblock %}
+    {% csrf_token %}
+    </form>

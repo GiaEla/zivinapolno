@@ -6,9 +6,7 @@
 
 
 {% block content %}
-    <h1>{{ event_name }}</h1>
     {% if user.is_authenticated %}
-        <hr>
         {% include 'ticket_form.html' %}
     {% else %}
         Za nakup kart se morate prijaviti

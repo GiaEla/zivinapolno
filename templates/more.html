@@ -1,40 +1,45 @@
 {% extends "base.html" %}
 
 {% block title %}
-    {{ event_name }}
+    {{ event.name }}
 {% endblock %}
 
 
 {% block content %}
 
-    <h1>{{ event_name }}</h1>
-    <p>{{ description }}</p>
-
-    {% if user.is_authenticated %}
-        <hr>
-        {% include 'ticket_form.html' %}
-    {% else %}
-{#        Za nakup kart se morate <a href="{% url 'login' %}"> prijaviti </a>#}
-        Za nakup kart se morate <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">prijaviti</button>
-        <div id="myModal" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-
-                <!-- Modal content-->
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Prijava</h4>
-                  </div>
-                  <div class="modal-body">
-{#                    {% include 'registration/login.html' %}#}
-                      {% include 'ticket_form.html' %}
-                  </div>
-                  <div class="modal-footer">
-                    <a href="{% url 'register' %}"> <button type="button" class="btn btn-default"> Registracija </button> </a>
-                  </div>
-                </div>
-
-          </div>
+<div class="activity_all">
+    <div class="row">
+        <div class="col-xs-6 col-sm-6 col-md-8 about-left">
+            <img class="img-responsive" src="{{ event.img_event.img.url }}">
         </div>
-    {% endif %}
+    <div class="col-xs-6 col-sm-6 col-md-4 about-right">
+        <div class="about-right-title">
+            <div class="about-right-title-center">
+                <h1 class="">{{ event.name }}</h1>
+                <p> {{ event.date_from }}</p>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <div class="row more_details">
+        <div class="col-xs-2 tickets">
+            {% if event.btn_type == 'Prihaja kmalu' %}
+                Na nakup kart bo potrebno še malo počakati.
+            {% elif event.btn_type == 'Doniraj'%}
+                Doniraj
+            {% else %}
+                {% if user.is_authenticated %}
+                    {% include 'ticket_form.html' %}
+                {%  else %}
+                    Za nakup kart se morate <a href=""  data-toggle="modal" data-target="#myModal" > prijaviti </a>
+                {% endif %}
+            {% endif %}
+        </div>
+        <div class="col-xs-10 activity-description">
+            {{ event.description }}
+        </div>
+    </div>
+</div>
+
 {% endblock %}

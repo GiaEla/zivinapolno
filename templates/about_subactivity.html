@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ activity }}
+{% endblock %}
+
+
+{% block content %}
+
+<div class="activity_all">
+    <div class="row">
+        <div class="col-md-8 about-left">
+            <img class="img-inherit" src="{{ sub_activity.image.url }}">
+        </div>
+    <div class="col-md-4 about-right">
+        <div class="about-right-title">
+            <h1 class="">{{ sub_activity.name }}</h1>
+        </div>
+    </div>
+
+    </div>
+
+
+    <div class="clearfix activity-description">
+        {{ sub_activity.description }}
+    </div>
+</div>
+{% endblock %}

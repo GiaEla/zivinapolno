@@ -1,0 +1,65 @@
+.row{
+    display: flex;
+    display: -webkit-flex;
+    flex-wrap: wrap;
+}
+
+.about-sub-activity{
+    border: solid grey 5px;
+    border-top: hidden;
+}
+
+.about-left{
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.about-right{
+    position: relative;
+    background: linear-gradient(to bottom right, $brand-info , lighten($brand-info, 10%));
+    padding: 0;
+    margin: 0;
+}
+
+.about-right-title{
+    position: absolute;
+    width: 100%;
+    top: 47%;
+    color: $gray-lighter;
+}
+
+.about-right-title-center{
+    display: block;
+    text-align: center;
+}
+
+.img-inherit{
+    width: 100%;
+    height: auto;
+}
+
+.activity-description{
+    padding: 20px;
+    background-color: $gray-lighter;
+    color: whitesmoke;
+}
+
+.activity_all{
+    margin-top: 100px;
+}
+
+.tickets{
+    background-color: lightgray;
+    margin: auto;
+    padding: 20px ;
+    height: auto;
+}
+
+.more_details{
+    padding: 0;
+    width: inherit;
+}
+
+.buy{
+    float: right;
+}

@@ -6,12 +6,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-
-    <link href="{% static 'css/reset.css'%}" rel="stylesheet">
-    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-    <link href="{% static 'css/half-slider.css'%}" rel="stylesheet">
-    <link href="{% static 'css/costum.css'%}" rel="stylesheet">
-    <link href="{% static 'css/activities.css'%}" rel="stylesheet">
+    <link href="{% static 'css/sass_bootstrap.css' %}" rel="stylesheet">
 
     <link href="https://fonts.googleapis.com/css?family=Amatic+SC&subset=latin,latin-ext" rel="stylesheet">
 
@@ -33,25 +28,22 @@
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
                 <a class="navbar-brand" href="{% url 'index' %}"> Živi na polno </a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="#">About</a>
+                        <a href="{% url 'index' %}#activities">Pri nas živi</a>
                     </li>
                     <li>
-                        <a href="#">Services</a>
+                        <a href="{% url 'index' %}#contact">Kontakt</a>
                     </li>
                     <li>
-                        <a href="#">Contact</a>
+                        <a href="#">Dogodki</a>
+                    </li>
+                     <li>
+                        <a href="{% url 'index' %}#donate ">Doniraj <span class="glyphicon glyphicon-heart"></span> </a>
                     </li>
                 </ul>
 
@@ -62,7 +54,7 @@
                         </li>
                         {% else %}
                         <li>
-                            <a href="{% url 'login' %}">Prijava</a>
+                             <a href=""  data-toggle="modal" data-target="#myModal">Prijava</a>
                         </li>
                         <li>
                             <a href="{% url 'register' %}">Registracija</a>
@@ -75,9 +67,11 @@
         <!-- /.container -->
     </nav>
 
-
+    <div class="">
         {% block header %}
         {% endblock %}
+    </div>
+
 
 
         <div class="container">
@@ -93,5 +87,24 @@
 {#        </div>#}
 {#        <!-- /.row -->#}
 {#    </footer>#}
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Prijava</h4>
+                  </div>
+                  <div class="modal-body">
+                    {% include 'registration/login.html' %}
+                  </div>
+                  <div class="modal-footer">
+                    <a href="{% url 'register' %}"> <button type="button" class="btn btn-default"> Registracija </button> </a>
+                  </div>
+                </div>
+
+          </div>
+        </div>
     </body>
 </html>

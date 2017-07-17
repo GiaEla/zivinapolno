@@ -4,8 +4,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 
 from pro.admin import admin_mail
 from pro.models import Invoice, Offer, Event, EventDetail, Product, ProductEvent, ProductQuantity, Activity, SubActivity, \
-    BankAccount, Reference
-from utils.costumer_related import mail, create_offer
+    BankAccount, Reference, UserProfile
+from utils.costumer_related import mail, create_offer, activation_mail
 from .forms import RegistrationForm, LoginForm, TicketForm
 from random import choice
 from string import ascii_letters, digits
@@ -31,13 +31,11 @@ def more(request, pk):
 
     else:
         event = get_object_or_404(Event, id=pk)
-        description = event.description
         event_detail = EventDetail.objects.filter(event=event)
         products = ProductEvent.objects.filter(event_detail=event_detail)
 
         return render(request, 'more.html', {
-                                                'event_name': event,
-                                                'description': description,
+                                                'event': event,
                                                 'products': products,
                                             })
 
@@ -66,9 +64,12 @@ def register(request):
     if request.method == "POST":
         form = RegistrationForm(request.POST)
         if form.is_valid():
-            registration = form.save(commit=False)
-            registration.token = ''. join(choice(ascii_letters + digits) for i in range(15))
-            registration.save()
+            user = form.save(commit=False)
+            user.activated = False
+            user.token = ''. join(choice(ascii_letters + digits) for i in range(15))
+            user.save()
+
+            activation_mail(user)
             return redirect('success')
 
     else:
@@ -98,11 +99,27 @@ def login(request):
 def about(request, pk):
 
     activity = get_object_or_404(Activity, pk=pk)
-    description = activity.description
     sub_activities = SubActivity.objects.filter(activity=activity)
 
     return render(request, 'about.html', {
                                             'activity': activity,
-                                            'description': description,
                                             'sub_activities': sub_activities,
                                         })
+
+
+def about_sub(request, fk, pk):
+
+    activity = get_object_or_404(Activity, pk=fk)
+    sub_activity = SubActivity.objects.get(pk=pk)
+
+    return render(request, 'about_subactivity.html', {
+                                            'sub_activity': sub_activity,
+                                        })
+
+
+def confirmation(request, token):
+    user = UserProfile.objects.get(token=token)
+    if user is True:
+        return render(request, 'success.html')
+    else:
+        return render(request, 'index.html')

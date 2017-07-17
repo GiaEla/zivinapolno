@@ -57,21 +57,33 @@
 
 {% block content %}
     <!-- Page Content -->
-<div class="container">
+<div class="container" id = "activities">
 
-    {% for activity in all_activities %}
-    <div class="featurette" id="center">
-        <img class="featurette-image img-circle img-responsive {% if forloop.counter|divisibleby:2 %}pull-right {% else %}pull-left{% endif %}" src="{{ activity.image.url}}">
-        <a href="{% url 'activities' pk=activity.id %}"> <h2 class="featurette-heading"> {{ activity.name }}</h2> </a>
-        <p class="lead"> {{ activity.description|truncatewords:15 }} </p>
+{#    {% for activity in all_activities %}#}
+{#    <div class="featurette" id="center">#}
+{#        <img class="featurette-image img-circle img-responsive {% if forloop.counter|divisibleby:2 %}pull-right {% else %}pull-left{% endif %}" src="{{ activity.image.url}}">#}
+{#        <a href="{% url 'activities' pk=activity.id %}"> <h2 class="featurette-heading"> {{ activity.name }}</h2> </a>#}
+{#        <p class="lead"> {{ activity.description|truncatewords:15 }} </p>#}
+{#    </div>#}
+{##}
+{#    <hr class="featurette-divider">#}
+{#    {% endfor %}#}
+
+<div class="row">
+{% for activity in all_activities %}
+    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 portfolio-item">
+       <img class="img-responsive activity_img" src="{{ activity.image.url}}" alt="slika za {{ activity.name }}">
+        <h3>
+            <a href="{% url 'activities' pk=activity.id %}">{{ activity.name }}</a>
+        </h3>
+        <p>{{ activity.description|truncatewords:10 }}</p>
     </div>
-
-    <hr class="featurette-divider">
-    {% endfor %}
+{% endfor %}
+</div>
 
 </div> {#    end container#}
 
-<div id="donate">
+<div id="donate" class="container">
     Prinesite vso desetino v zakladnico, da bo zaloga v moji hiši, in preizkusite me s tem, govori Gospod nad vojskami, če vam tedaj ne odprem zapornic neba in ne izlijem na vas blagoslova do preobilja! (Mal 3,10)
 
     Vsakdo naj da, kakor se je v srcu odločil, ne z žalostjo ali na silo, kajti Bog ljubi veselega darovalca. (2 Kor 9, 8)

@@ -152,3 +152,7 @@ MEDIA_URL = "/"
 WKTHMLTOPDF_PATH = b'C:\Program Files\wkhtmltopdf\\bin\wkhtmltopdf.exe'
 
 AUTH_USER_MODEL = 'pro.UserProfile'
+
+LOGIN_REDIRECT_URL = '/'
+
+SITE_URL = 'http://127.0.0.1:8000/'

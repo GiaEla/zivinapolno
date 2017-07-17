@@ -3,7 +3,7 @@
 {% endblock %}
 
 {% block form %}
-    <form method="POST" class="post-form"> {% csrf_token %}
+    <form method="POST" class="post-form">
     {% load bootstrap %}
         {{ form.username|bootstrap }}
         {{ form.password|bootstrap }}
@@ -16,5 +16,6 @@
         {{ form.subscribed|bootstrap }}
 
     <button type="submit" class="save btn btn-default">Registriraj se</button>
+    {% csrf_token %}
 </form>
 {% endblock %}

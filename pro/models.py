@@ -15,6 +15,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.http import HttpResponseRedirect, request
 from django.contrib import admin
 from django.contrib.contenttypes.models import ContentType
+from django.conf import settings
 
 from utils.generators import generate_object_number, generate_price_with_vat, generate_pdf
 # from utils.costumer_related import activation_mail
@@ -31,11 +32,12 @@ class UserProfile(AbstractUser):
     def activation(self):
         if self.activated is False:
             # activation_mail(self) če pokličem iz costumer_related ustvarim circular dependency?
+
             html_context = {
                 'user': self,
             }
 
-            subject = 'Aktivacija za email' + str(self.email)
+            subject = 'Aktivacija za email ' + str(self.email)
             message = render_to_string('registration/activate.html', html_context)
             user_mail = self.email
 

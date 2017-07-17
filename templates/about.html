@@ -7,22 +7,35 @@
 
 {% block content %}
 
-    {{ activity }}
-    {{ description }}
-
-{% for sub_activity in  sub_activities %}
-
-   <div class="featurette" id="center">
-        <img class="featurette-image img-circle img-responsive {% if forloop.counter|divisibleby:2 %}pull-right {% else %}pull-left{% endif %}" src="{{ sub_activity.image.url}}">
-        <a href="{% url 'sub_activities' pk=sub_activity.id %}"> <h2 class="featurette-heading"> {{ sub_activity.name }}</h2> </a>
-        <p class="lead"> {{ sub_activity.description|truncatewords:15 }} </p>
+<div class="activity_all">
+    <div class="row">
+        <div class="col-xs-6 col-sm-6 col-md-8 about-left">
+            <img class="img-responsive" src="{{ activity.image.url }}">
+        </div>
+        <div class="col-xs-6 col-sm-6 col-md-4 about-right">
+            <div class="about-right-title">
+                <h1 class="about-right-title-center">{{ activity.name|upper }}</h1>
+            </div>
+        </div>
     </div>
-
-    <hr class="featurette-divider">
-
-{% endfor %}
-
-    {{ activity }}
-    {{ description }}
+    <div class="row">
+        <div class="col-xs-12 activity-description">
+            {{ activity.description }}
+        </div>
+    </div>
+    <!-- for sub-activities if they exists -->
+        <div class="row about-sub-activity">
+        {% for sub_activity in  sub_activities %}
+            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 portfolio-item">
+                <img class="img-responsive activity_img" src="{{ sub_activity.image.url}}" alt="slika za {{ sub_activity.name }}">
+                <h3>
+                     <a href="{% url 'sub_activities' pk=sub_activity.id fk=activity.id%}">{{ sub_activity.name }}</a>
+                </h3>
+                <p>{{ sub_activity.description|truncatewords:15 }}</p>
+            </div>
+        {% endfor %}
+        </div>
+    <!-- end of sub_activities -->
+</div>
 
 {% endblock %}
