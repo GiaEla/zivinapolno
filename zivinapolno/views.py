@@ -79,12 +79,14 @@ def register(request):
 
 
 def success(request):
-    return render(request, 'success.html')
+    return render(request, 'registration/confirmed.html')
 
 
 def login(request):
-    form = LoginForm(request.POST)
     if request.method == "POST":
+        form = LoginForm(request.POST)
+        username = form.username
+
         if form.is_valid():
             return redirect('index.html')
         else:
@@ -120,6 +122,7 @@ def about_sub(request, fk, pk):
 def confirmation(request, token):
     user = UserProfile.objects.get(token=token)
     if user is True:
-        return render(request, 'success.html')
+        user.activated = True
+        return render(request, 'registration/confirmed.html')
     else:
         return render(request, 'index.html')
