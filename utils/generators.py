@@ -60,13 +60,12 @@ def generate_pdf(template, context, dir_name, file_name):
 
     html_string = render_to_string(template, context)
 
-    config = pdfkit.configuration(wkhtmltopdf=settings.WKTHMLTOPDF_PATH)
 
     relative_path = "static/pdfs/" + dir_name + '/' + file_name
 
     file_path = os.path.join(settings.BASE_DIR, relative_path)
 
-    pdfkit.from_string(html_string, file_path, configuration=config)
+    pdfkit.from_string(html_string, file_path)
 
     return relative_path
 

@@ -87,7 +87,7 @@ DATABASES = {
         'NAME': 'napolno',
         'USER': 'napolno',
         'PASSWORD': 'napolno',
-        'HOST': '192.168.1.69',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }
@@ -148,8 +148,6 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 MEDIA_URL = "/"
-
-WKTHMLTOPDF_PATH = b'C:\Program Files\wkhtmltopdf\\bin\wkhtmltopdf.exe'
 
 AUTH_USER_MODEL = 'pro.UserProfile'
 

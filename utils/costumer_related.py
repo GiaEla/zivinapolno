@@ -52,7 +52,7 @@ def mail(queryset):
             subject = 'Predračun št.' + str(queryset.offer_number)
             message = render_to_string('mail/pdf_offer_invoice.html', html_context)
             recipient_mail = queryset.recipient.email
-            pdf_path = settings.STATICFILES_DIRS[0] + '\\pdfs\\offers\\' + str(queryset.offer_number) + '.pdf'
+            pdf_path = settings.STATICFILES_DIRS[0] + '/pdfs/offers/' + str(queryset.offer_number) + '.pdf'
 
     elif isinstance(queryset, Invoice):
         queryset.generate_pdf()
@@ -65,7 +65,7 @@ def mail(queryset):
         subject = 'Račun št.' + str(queryset.offer_number)
         message = render_to_string('mail/pdf_offer_invoice.html', html_context)
         recipient_mail = queryset.recipient.email
-        pdf_path = settings.STATICFILES_DIRS[0] + '\\pdfs\\offers\\' + str(queryset.offer_number) + '.pdf'
+        pdf_path = settings.STATICFILES_DIRS[0] + '/pdfs/offers/' + str(queryset.offer_number) + '.pdf'
 
     email = EmailMessage(
         subject,

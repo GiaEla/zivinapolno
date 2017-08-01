@@ -361,7 +361,7 @@ class Offer(models.Model):
         subject = 'Račun št.' + str(invoice.invoice_number)
         message = render_to_string('mail/pdf_offer_invoice.html', html_context)
         recipient_mail = self.recipient.email
-        pdf_path = settings.STATICFILES_DIRS[0] + '\\pdfs\\invoices\\' + str(invoice.invoice_number) + '.pdf'
+        pdf_path = settings.STATICFILES_DIRS[0] + '//pdfs//invoices//' + str(invoice.invoice_number) + '.pdf'
 
         email = EmailMessage(
             subject,

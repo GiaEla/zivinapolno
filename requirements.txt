@@ -20,12 +20,10 @@ portend==1.8
 psycopg2==2.7.1
 pymongo==3.4.0
 pyparsing==2.2.0
-pypiwin32==219
 pytz==2017.2
 reportlab==3.4.0
 requests==2.16.5
 six==1.10.0
 tempora==1.7
 urllib3==1.21.1
-wkhtmltopdf==0.2
 ws4py==0.4.2
